@@ -1,0 +1,32 @@
+﻿{
+  "English": {
+    "error-age-number": "Age must be a number.",
+    "error-sex": "Error finding correct sex.",
+    "error-language": "Error finding correct language.",
+    "welcome": "Welcome to the Retirement Age Calculator",
+    "enter-age": "Please enter your age: ",
+    "enter-sex": "Please choose your sex:",
+    "male-option": "1. Male",
+    "female-option": "2. Female",
+    "ready": "You're ready to retire!",
+    "not-ready": "Sorry, you're not ready to retire!",
+    "choose-language": "Please choose your language:",
+    "english-option": "1. English",
+    "russian-option": "2. Russian"
+  },
+  "Russian": {
+    "error-age-number": "Возраст должен быть числом.",
+    "error-sex": "Ошибка определения пола.",
+    "error-language": "Ошибка определения языка.",
+    "welcome": "Добро пожаловать в калькулятор пенсионного возраста",
+    "enter-age": "Пожалуйста, введите ваш возраст: ",
+    "enter-sex": "Пожалуйста, выберите ваш пол:",
+    "male-option": "1. Мужской",
+    "female-option": "2. Женский",
+    "ready": "Вы готовы к выходу на пенсию!",
+    "not-ready": "Извините, вы не готовы к выходу на пенсию!",
+    "choose-language": "Пожалуйста, выберите ваш язык:",
+    "english-option": "1. Aнглийский",
+    "russian-option": "2. Русский"
+  }
+}

@@ -1,0 +1,139 @@
+﻿using System.Diagnostics;
+
+namespace Retirement;
+
+public static class Program
+{
+    public static void Main(string[] args)
+    {
+        Stopwatch stopwatch = null!;
+        var help = false;
+        var debug = false;
+        
+        foreach (var arg in args)
+        {
+            switch (arg)
+            {
+                case "help":
+                    help = true;
+                    break;
+                case "--debug":
+                    debug = true;
+                    stopwatch = Stopwatch.StartNew();
+                    break;
+            }
+        }
+        if (help)
+        {
+            Console.WriteLine("Usage: Retirement.exe [options]\n\n" +
+                              "Options:\n" +
+                              "  help      List of options.\n" +
+                              "  --debug   Show debug information.");
+            Console.ReadKey();
+            Environment.Exit(0);
+        }
+
+        var savedLang = Config.GetConfig();
+        if (savedLang == "Null")
+            ChangeLanguage();
+        else
+        {
+            Functions.GetLocale(savedLang);
+        }
+        
+        Console.Clear();
+        
+        Console.WriteLine($"{Loc.GetId("welcome")}\n" +
+                          $"{Loc.GetId("enter-age")}");
+        var age = Console.ReadLine();
+
+        var ageAgain = false;
+        
+        if (age == "ChangeLanguage")
+        {
+            ChangeLanguage();
+            ageAgain = true;
+        }
+
+        if (ageAgain)
+        {
+            Console.WriteLine($"{Loc.GetId("welcome")}\n" +
+                              $"{Loc.GetId("enter-age")}");
+            age = Console.ReadLine();
+        }
+        
+        var sex = GraphicChoice([
+            Loc.GetId("male-option"),
+            Loc.GetId("female-option")
+        ], Loc.GetId("enter-sex"));
+
+        Console.Clear();
+        Console.WriteLine(Functions.IsReadyToRetire(age, sex) ? Loc.GetId("ready") : Loc.GetId("not-ready"));
+
+        if (!debug) return;
+        stopwatch.Stop();
+        Console.WriteLine(stopwatch.Elapsed.TotalSeconds);
+    }
+
+    private static void ChangeLanguage()
+    {
+        var languageInput = GraphicChoice([
+            "1. English",
+            "2. Russian"
+        ], "Please choose your language:");
+
+        Functions.GetLocale(languageInput);
+    }
+    
+    /// <summary>
+    /// Presents a user with a graphic selection of some options.
+    /// </summary>
+    /// <param name="options">String array of options displayed to the user.</param>
+    /// <param name="title">Optional title for the options</param>
+    /// <returns>String of a selected option</returns>
+    private static string GraphicChoice(string[] options, string title = "")
+    {
+        var selected = 0;
+        ConsoleKey key;
+
+        var (left, top) = Console.GetCursorPosition();
+        Console.CursorVisible = false;
+        
+        do
+        {
+            Console.SetCursorPosition(left, top);
+            
+            if (title != "")
+                Console.Write(title + "\n");
+            
+            for (var i = 0; i < options.Length; i++)
+            {
+                if (i == selected)
+                {
+                    Console.BackgroundColor = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.WriteLine($"> {options[i]} <");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine($"  {options[i]}  ");
+                }
+            }
+
+            var keyInfo = Console.ReadKey(true);
+            key = keyInfo.Key;
+
+            selected = key switch
+            {
+                ConsoleKey.UpArrow or ConsoleKey.LeftArrow => (selected - 1 + options.Length) % options.Length,
+                ConsoleKey.DownArrow or ConsoleKey.RightArrow => (selected + 1) % options.Length,
+                _ => selected
+            };
+        } while (key != ConsoleKey.Enter);
+
+        Console.CursorVisible = true;
+        Console.Clear();
+        return options[selected];
+    }
+}
