@@ -102,7 +102,7 @@ public static class Program
 
         if (!debug) return;
         stopwatch.Stop();
-        Console.WriteLine(stopwatch.Elapsed.TotalSeconds);
+        Console.WriteLine($"{stopwatch.Elapsed.TotalSeconds} from the start.");
     }
 
     private static void ChangeLanguage()
