@@ -6,8 +6,8 @@ public static class LocaleData
 {
     public static readonly Dictionary<Locale, Dictionary<string, string>> LocaleStrings;
 
-    public static readonly List<string> MaleDict = ["1. Male", "M", "1. Mужчина", "М", "1", "1."];
-    public static readonly List<string> FemaleDict = ["2. Female", "F", "2. Женщина", "Ж", "2", "2."];
+    public static readonly List<string> MaleDict = ["1. Male", "M", "1. мужской", "М", "1", "1."];
+    public static readonly List<string> FemaleDict = ["2. Female", "F", "2. женский", "Ж", "2", "2."];
 
     static LocaleData()
     {

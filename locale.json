@@ -12,7 +12,8 @@
     "not-ready": "Sorry, you're not ready to retire!",
     "choose-language": "Please choose your language:",
     "english-option": "1. English",
-    "russian-option": "2. Russian"
+    "russian-option": "2. Russian",
+    "pension-check-start": "Starting pension check..."
   },
   "Russian": {
     "error-age-number": "Возраст должен быть числом.",
@@ -27,6 +28,7 @@
     "not-ready": "Извините, вы не готовы к выходу на пенсию!",
     "choose-language": "Пожалуйста, выберите ваш язык:",
     "english-option": "1. Aнглийский",
-    "russian-option": "2. Русский"
+    "russian-option": "2. Русский",
+    "pension-check-start": "Расчёт Вашей пенсии..."
   }
 }

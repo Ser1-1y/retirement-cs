@@ -43,19 +43,27 @@ public static class Program
         
         Console.Clear();
         
-        Console.WriteLine($"{Loc.GetId("welcome")}\n" +
-                          $"{Loc.GetId("enter-age")}");
-        var age = Console.ReadLine();
-
-        var ageAgain = false;
-        
-        if (age == "ChangeLanguage")
+        string? age;
+        if (debug)
         {
-            ChangeLanguage();
-            ageAgain = true;
-        }
+            while (true)
+            {
+                Console.WriteLine($"{Loc.GetId("welcome")}\n" +
+                                  $"{Loc.GetId("enter-age")}");
+                age = Console.ReadLine();
 
-        if (ageAgain)
+                if (age == null) continue;
+
+                if (age.Equals("ChangeLanguage", StringComparison.OrdinalIgnoreCase))
+                {
+                    ChangeLanguage();
+                    continue;
+                }
+
+                break;
+            }
+        }
+        else
         {
             Console.WriteLine($"{Loc.GetId("welcome")}\n" +
                               $"{Loc.GetId("enter-age")}");
@@ -67,8 +75,30 @@ public static class Program
             Loc.GetId("female-option")
         ], Loc.GetId("enter-sex"));
 
+        const int total = 100;
+        var progressBar = new ConsoleProgressBar(total);
+        
+        Console.WriteLine(Loc.GetId("pension-check-start"));
+        Thread.Sleep(Random.Shared.Next(200, 800));
+        
+        for (var i = 0; i <= total; i++)
+        {
+            progressBar.ShowProgress(i);
+            Thread.Sleep(Random.Shared.Next(0, 200));
+        }
+
+        Thread.Sleep(500);
         Console.Clear();
-        Console.WriteLine(Functions.IsReadyToRetire(age, sex) ? Loc.GetId("ready") : Loc.GetId("not-ready"));
+        
+        Console.Clear();
+        
+        var readyId = Loc.GetId(Functions.IsReadyToRetire(age, sex) ? "ready" : "not-ready");
+        foreach (var character in readyId)
+        {
+            Console.Write(character);
+            Thread.Sleep(Random.Shared.Next(0, 200));
+        }
+        Console.WriteLine();
 
         if (!debug) return;
         stopwatch.Stop();
@@ -89,7 +119,7 @@ public static class Program
     /// Presents a user with a graphic selection of some options.
     /// </summary>
     /// <param name="options">String array of options displayed to the user.</param>
-    /// <param name="title">Optional title for the options</param>
+    /// <param name="title">Optional title for the options.</param>
     /// <returns>String of a selected option</returns>
     private static string GraphicChoice(string[] options, string title = "")
     {

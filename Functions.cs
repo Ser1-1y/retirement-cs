@@ -17,7 +17,7 @@ public static class Functions
     {
         if (sex == null)
         {
-            Console.WriteLine(Loc.GetId("error_sex"));
+            Console.WriteLine(Loc.GetId("error-sex"));
             Environment.Exit(1);
         }
         
@@ -28,7 +28,7 @@ public static class Functions
         if (LocaleData.FemaleDict.Any(str => str.Equals(sexLower, StringComparison.CurrentCultureIgnoreCase)))
             return false;
 
-        Console.WriteLine(Loc.GetId("error_sex"));
+        Console.WriteLine(Loc.GetId("error-sex"));
         Environment.Exit(1);
         return false;
     }
@@ -61,4 +61,68 @@ public static class Functions
         Environment.Exit(1);
         return Locale.English;
     }
+}
+
+public class ConsoleProgressBar(int total, int widthOfBar = ConsoleProgressBar.DefaultWidthOfBar)
+    : IProgressBar
+{
+    private const ConsoleColor ForeColor = ConsoleColor.Green;
+    private const ConsoleColor BkColor = ConsoleColor.Gray;
+    private const int DefaultWidthOfBar = 32;
+    private const int TextMarginLeft = 3;
+
+    private bool _intited;
+
+    private void Init()
+    {
+        _lastPosition = 0;
+
+        Console.CursorVisible = false;
+        Console.CursorLeft = 0;
+        Console.Write("["); 
+        Console.CursorLeft = widthOfBar;
+        Console.Write("]"); 
+        Console.CursorLeft = 1;
+
+        for (var position = 1; position < widthOfBar; position++)
+        {
+            Console.BackgroundColor = BkColor;
+            Console.CursorLeft = position;
+            Console.Write(" ");
+        }
+    }
+
+    public void ShowProgress(int currentCount)
+    {
+        if (!_intited)
+        {
+            Init();
+            _intited = true;
+        }
+        DrawTextProgressBar(currentCount);
+    }
+
+    private int _lastPosition;
+
+    private void DrawTextProgressBar(int currentCount)
+    {
+        
+        var position = currentCount * widthOfBar / total;
+        if (position != _lastPosition)
+        {
+            _lastPosition = position;
+            Console.BackgroundColor = ForeColor;
+            Console.CursorLeft = position >= widthOfBar ? widthOfBar - 1 : position;
+            Console.Write(" ");
+        }
+
+        Console.CursorLeft = widthOfBar + TextMarginLeft;
+        Console.BackgroundColor = ConsoleColor.Black;
+        Console.Write($"{currentCount}%" + "    ");
+    }
+}
+
+public interface IProgressBar
+{
+    public void ShowProgress(int currentCount);
 }
