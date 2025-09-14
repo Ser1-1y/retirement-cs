@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 namespace Retirement;
 
@@ -6,6 +7,8 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        Console.OutputEncoding = Encoding.Unicode;
+        
         Stopwatch stopwatch = null!;
         var help = false;
         var debug = false;
@@ -100,6 +103,8 @@ public static class Program
         }
         Console.WriteLine();
 
+        Console.ReadKey();
+        
         if (!debug) return;
         stopwatch.Stop();
         Console.WriteLine($"{stopwatch.Elapsed.TotalSeconds} from the start.");
@@ -107,9 +112,10 @@ public static class Program
 
     private static void ChangeLanguage()
     {
+        Console.WriteLine("Change selection using arrow keys (← and →, ↑ and ↓).");
         var languageInput = GraphicChoice([
             "1. English",
-            "2. Russian"
+            "2. Русский"
         ], "Please choose your language:");
 
         Functions.GetLocale(languageInput);

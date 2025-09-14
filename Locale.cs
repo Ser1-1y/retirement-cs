@@ -23,8 +23,8 @@ public static class LocaleData
     
     public static readonly Dictionary<Locale, string[]> LocaleMappings = new()
     {
-        { Locale.English, ["English", "1. English"] },
-        { Locale.Russian, ["Russian", "2. Russian"] },
+        { Locale.English, ["English", "1. English", "2. Английский"] },
+        { Locale.Russian, ["Russian", "2. Russian", "2. Русский"] },
     };
 }
 public static class Loc
