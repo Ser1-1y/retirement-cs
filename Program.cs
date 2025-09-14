@@ -102,12 +102,12 @@ public static class Program
             Thread.Sleep(Random.Shared.Next(0, 200));
         }
         Console.WriteLine();
-
+        if (debug)
+        {
+            stopwatch.Stop();
+            Console.WriteLine($"{stopwatch.Elapsed.TotalSeconds} from the start.");
+        }
         Console.ReadKey();
-        
-        if (!debug) return;
-        stopwatch.Stop();
-        Console.WriteLine($"{stopwatch.Elapsed.TotalSeconds} from the start.");
     }
 
     private static void ChangeLanguage()
